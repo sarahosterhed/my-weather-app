@@ -45,8 +45,17 @@
         clip-path: ellipse(130% 100% at 50% 0%);
     }
 
-    .btn-blue {
-        @apply bg-blue-500 py-2 px-4 rounded-xl font-bold text-white hover:bg-blue-700;
+    .btn-wrapper {
+        @apply flex justify-between gap-3 -mt-12;
+    }
+
+    .button {
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.35);
+            @apply flex items-center justify-center rounded-full h-20 w-20 bg-[#757AFF] z-10 cursor-pointer;
+    }
+
+    .button > img {
+        height: revert-layer;
     }
 
     .forecast-columns {
@@ -54,15 +63,14 @@
     }
 
     .input-wrapper {
-        @apply w-full relative my-auto;
+        @apply w-full relative h-12 flex justify-end items-center;
     }
+    
     .input-wrapper > img {
-        @apply absolute w-[40px] z-10 right-0 t-1/2 transform translate-y-4 cursor-pointer;
+        @apply w-[40px] z-10 right-0 cursor-pointer;
     }
 
     .city-input {
-        /* background: url("/assets/gps.svg");
-        background-size: 40px; */
         @apply w-full h-12 absolute rounded-full pl-5 pr-12 font-barlow text-slate-900  bg-no-repeat bg-right bg-white;
     }
 }

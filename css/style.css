@@ -560,11 +560,8 @@ video {
 
 h1,
     h2,
-    h3,
     p{
   font-family: Barlow, Roboto, sans-serif;
-  font-size: 1.5rem;
-  line-height: 2rem;
   font-weight: 300;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -581,9 +578,9 @@ h2{
   font-weight: 500;
 }
 
-.error-message {
-  padding-left: 16px;
-  font-size: 16px;
+p{
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 li{
@@ -618,22 +615,29 @@ li{
   clip-path: ellipse(130% 100% at 50% 0%);
 }
 
-.btn-blue{
-  border-radius: 0.75rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  font-weight: 700;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+.btn-wrapper{
+  margin-top: -3rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
 }
 
-.btn-blue:hover{
+.button {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+  display: flex;
+  height: 5rem;
+  width: 5rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
   --tw-bg-opacity: 1;
-  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+  background-color: rgb(117 122 255 / var(--tw-bg-opacity));
+}
+
+.button > img {
+  height: revert-layer;
 }
 
 .forecast-columns{
@@ -645,23 +649,21 @@ li{
 
 .input-wrapper{
   position: relative;
-  margin-top: auto;
-  margin-bottom: auto;
+  display: flex;
+  height: 3rem;
   width: 100%;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-.input-wrapper > img {
-  width: 40px;
-  top: 50%;
-  transform: translateY(40%);
-  position: absolute;
+.input-wrapper > img{
   right: 0px;
   z-index: 10;
+  width: 40px;
+  cursor: pointer;
 }
 
-.city-input {
-  /* background: url("/assets/gps.svg");
-        background-size: 40px; */
+.city-input{
   position: absolute;
   height: 3rem;
   width: 100%;
@@ -679,10 +681,6 @@ li{
 
 .relative{
   position: relative;
-}
-
-.top-12{
-  top: 3rem;
 }
 
 .col-span-2{
@@ -766,13 +764,27 @@ li{
   padding: 2rem;
 }
 
+.px-8{
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .py-10{
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
 }
 
+.pl-3{
+  padding-left: 0.75rem;
+}
+
 .pt-5{
   padding-top: 1.25rem;
+}
+
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .font-medium{
@@ -786,5 +798,19 @@ li{
 @media (min-width: 768px){
   .md\:col-span-2{
     grid-column: span 2 / span 2;
+  }
+
+  .md\:p-20{
+    padding: 5rem;
+  }
+
+  .md\:px-20{
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+
+  .md\:py-10{
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
   }
 }

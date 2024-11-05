@@ -14,6 +14,9 @@ const currentCity = document.getElementById("current-city");
 const currentWeatherDescription = document.getElementById("current-weather-description");
 const sunHours = document.getElementById("sun-hours");
 
+const addFavoriteBtn = document.getElementById("add-favorite");
+const shuffleFavoritesBtn = document.getElementById("shuffle-favorites");
+
 const forecastWeekdays = document.getElementById("forecast-weekdays");
 const forecastIcons = document.getElementById("forecast-icons");
 const forecastTemperatures = document.getElementById("forecast-temperatures");
@@ -73,7 +76,8 @@ const fetchCurrentWeather = async () => {
     } catch (error) {
         console.error(error.message);
         errorMessage.innerText = error.message;
-        errorMessage.style.marginBottom = "-2rem"
+        console.log(errorMessage.clientHeight)
+        errorMessage.style.marginBottom = `-${errorMessage.clientHeight}px`
     }
 }
 
@@ -245,19 +249,38 @@ const handleGetCurrentLocation = () => {
     });
 }
 
+//Function for adding cities to favorites
+const addToFavoriteCities = () => {
+    if (!favoriteCities.includes(city)) {
+        favoriteCities.push(city);
+    } else {
+        console.log("city already added")
+    }
+    console.log(favoriteCities)
+}
+
+let currentIndex = 0;
+
+const shuffleFavoriteCities = () => {
+    if (favoriteCities.length === 0) {
+        console.log("No favorite cities added");
+        return;
+    }
+    city = favoriteCities[currentIndex];
+
+    fetchCurrentWeather();
+    fetchWeatherForecast();
+
+    currentIndex = (currentIndex + 1) % favoriteCities.length;
+
+}
+
+
 //Eventlisteners for input field
 cityInput.addEventListener("change", getCityInput);
 gpsIcon.addEventListener("click", handleGetCurrentLocation);
-
-// const addToFavoriteCities = () => {
-//     favoriteCities.push(city);
-// }
-
-// const button = document.querySelector(".button");
-
-// button.addEventListener("click", (event) => {
-//     city = favoriteCities
-// })
+addFavoriteBtn.addEventListener("click", addToFavoriteCities);
+shuffleFavoritesBtn.addEventListener("click", shuffleFavoriteCities);
 
 fetchCurrentWeather();
 

@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- <link rel="stylesheet" href="css/styles.css"> -->
+    <link rel="stylesheet" href="/css/style.css">
     <title>Weather app</title>
 </head>
 
 <body>
     <div class="h-screen max-w-4xl mx-auto">
-        <main id="forecast-main" class="gradient relative p-8 py-10">
+        <main id="forecast-main" class="gradient relative p-8 py-10 md:p-20 md:py-10">
             <div class="input-wrapper">
                 <input type="text" id="city-input" class="city-input" placeholder="Search for cities">
                 <img src="./assets/gps.svg" id="gps-icon" alt="gps icon">
             </div>
-            <p id="error-message" class="error-message relative top-12 text-xs"></p>
-            <section id="current-weather" class="grid grid-cols-4 relative top-12 mt-8">
+            <p id="error-message" class="text-sm pl-3"></p>
+            <section id="current-weather" class="grid grid-cols-4 mt-8">
                 <h1 id="current-temperature" class="col-span-2 self-center row-start-1"></h1>
                 <div id="current-weather-icon" class="col-span-2 row-start-1 justify-self-end self-center"></div>
                 <h2 id="current-city" class="col-span-4 row-start-2 mt-4 font-medium"></h2>
@@ -26,10 +26,13 @@
                 </section>
             </section>
         </main>
-        <div id="add-favorite" class="button add-favorite"><img src="assets/arrow-right.svg"></div>
-        <div id="shuffle-favorite" class="button shuffle-favorites"><img src="assets/arrow-right.svg"></div>
+        <div class="btn-wrapper px-8 md:px-20">
+            <div id="add-favorite" class="button add-favorite"><img src="assets/plus.svg" height="40"></div>
+            <div id="shuffle-favorites" class="button shuffle-favorites"><img src="assets/arrow-right.svg" height="30">
+            </div>
+        </div>
 
-        <section id="forecast-weekly" class="flex justify-between items-stretch p-8 py-10">
+        <section id="forecast-weekly" class="flex justify-between items-stretch p-8 py-10 md:p-20 md:py-10">
             <div id="forecast-weekdays" class=""></div>
             <div id="forecast-icons" class="forecast-columns"></div>
             <div id="forecast-temperatures" class=""></div>
