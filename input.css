@@ -29,9 +29,9 @@
         @apply text-slate-500 font-barlow text-lg;
     }
 
-    .svh {
-        height: 100svh;
-        /* @apply h-screen; */
+    .mobile-height {
+        @apply h-screen;
+        height: 100dvh;
     }
 
     .current-weather-icon {
