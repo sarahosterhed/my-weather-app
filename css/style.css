@@ -591,6 +591,11 @@ li{
   color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 
+.svh {
+  height: 100svh;
+  /* @apply h-screen; */
+}
+
 .current-weather-icon{
   max-height: 8rem;
 }
