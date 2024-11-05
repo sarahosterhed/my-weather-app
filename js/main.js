@@ -182,8 +182,6 @@ const fetchWeatherCurrentLocation = async (latitude, longitude) => {
     }
 }
 
-
-
 // Function to determine image name based on the weather id
 const getWeatherImageName = (id) => {
     if (id === 800) return "sun";
@@ -256,7 +254,6 @@ const addToFavoriteCities = () => {
     } else {
         console.log("city already added")
     }
-    console.log(favoriteCities)
 }
 
 let currentIndex = 0;
@@ -272,13 +269,14 @@ const shuffleFavoriteCities = () => {
     fetchWeatherForecast();
 
     currentIndex = (currentIndex + 1) % favoriteCities.length;
-
 }
 
 
 //Eventlisteners for input field
 cityInput.addEventListener("change", getCityInput);
 gpsIcon.addEventListener("click", handleGetCurrentLocation);
+
+//Eventlisteners for favorite options
 addFavoriteBtn.addEventListener("click", addToFavoriteCities);
 shuffleFavoritesBtn.addEventListener("click", shuffleFavoriteCities);
 
