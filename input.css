@@ -14,11 +14,11 @@
     }
 
     h1 {
-        @apply text-9xl; 
+        @apply text-8xl md:text-9xl ; 
     }
 
     h2 {
-        @apply text-4xl font-medium;
+        @apply text-3xl md:text-4xl font-medium;
     }
 
     p {
@@ -35,7 +35,7 @@
     }
 
     .current-weather-icon {
-        @apply max-h-32;
+        @apply max-h-24 md:max-h-32;
     }
 
     .forecast-icon {

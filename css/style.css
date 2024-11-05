@@ -568,14 +568,28 @@ h1,
 }
 
 h1{
-  font-size: 8rem;
+  font-size: 6rem;
   line-height: 1;
 }
 
+@media (min-width: 768px){
+  h1{
+    font-size: 8rem;
+    line-height: 1;
+  }
+}
+
 h2{
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
   font-weight: 500;
+}
+
+@media (min-width: 768px){
+  h2{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
 }
 
 p{
@@ -597,7 +611,13 @@ li{
 }
 
 .current-weather-icon{
-  max-height: 8rem;
+  max-height: 6rem;
+}
+
+@media (min-width: 768px){
+  .current-weather-icon{
+    max-height: 8rem;
+  }
 }
 
 .forecast-icon{
