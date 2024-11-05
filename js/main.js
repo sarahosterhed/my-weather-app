@@ -6,6 +6,8 @@ const getForecast = "forecast"
 
 // Get elements
 const cityInput = document.getElementById("city-input");
+const gpsIcon = document.getElementById("gps-icon");
+const currentWeatherContainer = document.getElementById("current-weather");
 const currentWeatherIcon = document.getElementById("current-weather-icon");
 const currentTemperature = document.getElementById("current-temperature");
 const currentCity = document.getElementById("current-city");
@@ -33,18 +35,19 @@ const fetchCurrentWeather = async () => {
             if (response.status === 404) {
                 throw new Error("City not found, enter a valid city name.");
             } else {
-                throw new Error(`Error code: ${response.status}, ${response.statusText}`);
+                throw new Error(`Error retrieving weather data: ${response.status}, ${response.statusText}`);
             }
         }
         const weatherData = await response.json();
 
         // Clear error message
         errorMessage.innerText = "";
+        errorMessage.style.marginBottom = "0rem"
 
         const { main, name, sys, weather } = weatherData;
 
         //Current temperature
-        currentTemperature.innerText = Math.round(main.temp);
+        currentTemperature.innerText = Math.round(main.temp) + "°";
         //Current city
         currentCity.innerText = name;
 
@@ -68,8 +71,9 @@ const fetchCurrentWeather = async () => {
             <p>${formatSunHours(sunset)}</p>`;
 
     } catch (error) {
-        console.log(error);
+        console.error(error.message);
         errorMessage.innerText = error.message;
+        errorMessage.style.marginBottom = "-2rem"
     }
 }
 
@@ -82,7 +86,7 @@ const fetchWeatherForecast = async () => {
             if (response.status === 404) {
                 throw new Error("City not found. Please enter a valid city name.");
             } else {
-                throw new Error(`Error code: ${response.status}, ${response.statusText}`);
+                throw new Error(`Error retrieving weather data: ${response.status}, ${response.statusText}`);
             }
         }
 
@@ -96,7 +100,7 @@ const fetchWeatherForecast = async () => {
         const nightTime = filterByHour(list, 0);
 
 
-        const daysOfTheWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const daysOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
         //Create array of the names of upcoming five weekdays
         const forecastDays = dayTime.map(({ dt_txt }) => {
@@ -107,6 +111,7 @@ const fetchWeatherForecast = async () => {
         //Add weekdays to html
         forecastWeekdays.innerHTML = "";
         const dayList = document.createElement("ul");
+        dayList.className = "forecast-columns";
         //Add each day in a list item
         for (let i = 0; i < forecastDays.length; i++) {
             const addDays = document.createElement("li");
@@ -133,19 +138,47 @@ const fetchWeatherForecast = async () => {
         //Add temperatures to html
         forecastTemperatures.innerHTML = "";
         const tempratureList = document.createElement("ul");
+        tempratureList.className = "forecast-columns";
         // Add temperatures for the upcoming 5 days
         for (let i = 0; i < dailyTemps.length; i++) {
             const addTemperature = document.createElement("li");
-            addTemperature.textContent = `${dailyTemps[i]}° / ${nightlyTemps[i]} °C`;
+            addTemperature.textContent = `${dailyTemps[i]} ° / ${nightlyTemps[i]} °C`;
             tempratureList.appendChild(addTemperature);
             forecastTemperatures.appendChild(tempratureList);
         }
 
     } catch (error) {
-        console.log(error);
+        console.error(error.message);
     }
-
 }
+
+//Fetch weather for current location
+const fetchWeatherCurrentLocation = async (latitude, longitude) => {
+    try {
+        const response = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${apiKey}`);
+        if (!response.ok) {
+            throw new Error("Unable to get your current location. Please try typing your city instead :)");
+        }
+        const currentLocationData = await response.json();
+        if (currentLocationData.length === 0) {
+            throw new Error("Unable to determine your location. Please try typing your city instead :)");
+        }
+
+        //Set city to current location
+        city = currentLocationData[0].name;
+
+        //Fetch weather forecast for current location
+        fetchCurrentWeather();
+        fetchWeatherForecast();
+
+    } catch (error) {
+        console.error("Error getting current location:", error.message);
+        errorMessage.innerText = error.message;
+        errorMessage.style.marginBottom = "-2rem";
+    }
+}
+
+
 
 // Function to determine image name based on the weather id
 const getWeatherImageName = (id) => {
@@ -163,6 +196,11 @@ const getWeatherImageName = (id) => {
 //Function for adding weather icon
 const setWeatherIcon = (description, imageName, appendToElement, singleDisplay) => {
     let weatherIcon = document.createElement("img");
+    if (singleDisplay) {
+        weatherIcon.className = "current-weather-icon"
+    } else {
+        weatherIcon.className = "forecast-icon"
+    }
     weatherIcon.alt = description;
     weatherIcon.src = `./img/${imageName}.png`;
     if (singleDisplay) {
@@ -197,8 +235,19 @@ const getCityInput = (event) => {
     fetchWeatherForecast();
 }
 
-//Eventlistener for input field
-cityInput.addEventListener("change", getCityInput)
+//Function for getting current location
+const handleGetCurrentLocation = () => {
+    //Get current location
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+        const latitude = coords.latitude;
+        const longitude = coords.longitude;
+        fetchWeatherCurrentLocation(latitude, longitude);
+    });
+}
+
+//Eventlisteners for input field
+cityInput.addEventListener("change", getCityInput);
+gpsIcon.addEventListener("click", handleGetCurrentLocation);
 
 // const addToFavoriteCities = () => {
 //     favoriteCities.push(city);
@@ -213,3 +262,4 @@ cityInput.addEventListener("change", getCityInput)
 fetchCurrentWeather();
 
 fetchWeatherForecast();
+
